@@ -34,7 +34,7 @@ function cleanParkInput(parkName) {
     return cleanName.join(" ").toLowerCase();
 }
 
-var apiKey = ""
+var apiKey = "aqSeG01qbzM1PxC6rl1RhVTduggetxV6DyVBxjar"
 // first fetch to get park code and coordinates
 function getParkData(parkName) {
     var apiUrl = `https://developer.nps.gov/api/v1/parks?q=${parkName}%20national%20park&sort=-name&api_key=${apiKey}`;
@@ -89,7 +89,6 @@ function getParkData(parkName) {
             saveParkData();
         })
         .catch(function (error) {
-            //    alertModal();
             console.log(error);
         })
 }
@@ -137,7 +136,7 @@ function displayCampgroundInfo(campArray) {
 }
 // daily weather forecast for the next 7 days
 function getParkWeatherData(lat, lon) {
-    var apiWeatherKey = "";
+    var apiWeatherKey = "d26f4f6b4558c822bbb01131aac44003";
     // plug in coordinates to get data with all needed information
     var apiUrlCoord = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minute&units=imperial&appid=${apiWeatherKey}`
     fetch(apiUrlCoord)
@@ -203,9 +202,7 @@ var displayButton = function (savedParkName, parkBtn) {
     parkBtn = document.createElement("button");
     parkBtn.innerHTML = savedParkName;
     parkNameBody.appendChild(parkBtn);
-    parkNameInput = savedParkName;
     parkBtn.id = savedParkName;
-    parkBtnId.unshift(savedParkName);
     $(parkBtn).addClass('camp-btn').attr('onclick', 'buttonOnClick(this.id);');
 }
 var buttonOnClick = function (id) {

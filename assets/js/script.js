@@ -1,13 +1,8 @@
-
-var parkArray = [];
 var parkNameEl;
 var nationalPark = "";
 var parkNameBody = document.querySelector("#parkName-btn")
 var savePark = [];
-var parkNameInput = "";
 var parkBtnId = [];
-var counter = 0;
-var parkNum = 9;
 
 // retrieve park name from user input and pass to fetch
 function getInputParkData() {
@@ -27,7 +22,7 @@ function getInputParkData() {
 function disablemodal() {
     $("#modal-popup").removeClass("is-active");
 }
-
+// remove any extra spaces and make park name all lower case
 function cleanParkInput(parkName) {
     var cleanInput = parkName.split(" ");
     var cleanName = cleanInput.filter(noSpaces => noSpaces !== "");
@@ -57,11 +52,10 @@ function getParkData(parkName) {
                 window.setTimeout(disablemodal, 5000);
                 console.log("no park name ");
             }
+            // get longitude, latitude and park code for 2nd fetch, get park url for link for app
             var parkId = response.data[0].parkCode;
             var parkLong = response.data[0].longitude;
             var parkLat = response.data[0].latitude;
-            //should probably display url of park when page loads and message
-            // instructing users to click link for information on park and campground fees
             var parkUrl = response.data[0].url
             $("#search-park-input, #forecast-park").html(`<a href=${parkUrl} target="_blank">${parkName.toUpperCase()} NATIONAL PARK</a>`);
             // send park coordinates to get 7 day forecast
@@ -92,6 +86,7 @@ function getParkData(parkName) {
             console.log(error);
         })
 }
+// get and display campgrounds that allow rv's and campground information
 function displayCampgroundInfo(campArray) {
     var campInfo = ("#bullet-point");
     $(campInfo).empty();
@@ -105,6 +100,7 @@ function displayCampgroundInfo(campArray) {
             var campUrlEl = $("<a>").attr("id", "camp-url");
             $(campUrlEl).html(`<a href=${campUrl} target="_blank">${campName}</a>`);
             $(listItemEl).append(campUrlEl);
+            // determine which campgrounds need reservations and get url
             var campReserve = campArray[i].reservationUrl;
             if (!campReserve) {
                 var campReserveEl = $("<p>").attr("style", "margin:0px")
@@ -167,7 +163,6 @@ function getParkWeatherData(lat, lon) {
                 $("#forecast-prediction").append(dailyDivEl);
             }
         }).catch(function (error) {
-            //    alertModal();
             console.log(error);
         });
 }
